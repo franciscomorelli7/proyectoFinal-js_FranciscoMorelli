@@ -90,69 +90,9 @@ cargarCarritoLocalStorage()
 
 //Botones carrito
 
-// Función para mostrar los productos en el carrito
-function mostrarProductosEnCarrito() {
-  const carritoLista = document.querySelector("#carritoLista");
-  carritoLista.innerHTML = ""; // Limpiar la lista antes de mostrar los productos
 
-  const productosAgrupados = agruparProductosPorNombre(carrito);
 
-  productosAgrupados.forEach(producto => {
-      const li = document.createElement("li");
-      const cantidad = producto.cantidad;
-      const botonEliminar = document.createElement("button");
-      botonEliminar.textContent = "Eliminar";
-      botonEliminar.addEventListener("click", () => eliminarProductoDelCarrito(producto.id));
-      
-      li.textContent = `${producto.nombre} x ${cantidad} - $${producto.precio * cantidad}`;
-      li.appendChild(botonEliminar);
-      carritoLista.appendChild(li);
-  });
-}
 
-// Función para agrupar productos en el carrito por nombre y contar la cantidad
-function agruparProductosPorNombre(carrito) {
-  const productosAgrupados = [];
-
-  carrito.forEach(producto => {
-      const existente = productosAgrupados.find(p => p.id === producto.id);
-      if (existente) {
-          existente.cantidad++;
-      } else {
-          productosAgrupados.push({ id: producto.id, nombre: producto.nombre, precio: producto.precio, cantidad: 1 });
-      }
-  });
-
-  return productosAgrupados;
-}
-
-// Función para eliminar un producto del carrito
-function eliminarProductoDelCarrito(productoId) {
-  carrito = carrito.filter(producto => producto.id !== productoId);
-  actualizarContadorCarrito();
-  cargarCarritoLocalStorage();
-  mostrarProductosEnCarrito();
-}
-
-// Evento para vaciar el carrito
-const botonVaciarCarrito = document.querySelector("#vaciar-carrito");
-botonVaciarCarrito.addEventListener("click", () => {
-  carrito = [];
-  actualizarContadorCarrito();
-  cargarCarritoLocalStorage();
-  mostrarProductosEnCarrito();
-});
-
-// Evento para finalizar la compra (puedes personalizar esta función según tus necesidades)
-const botonFinalizarCompra = document.querySelector("#finalizar-compra");
-botonFinalizarCompra.addEventListener("click", () => {
-  // Agrega aquí la lógica para finalizar la compra
-  alert("Compra finalizada. Gracias por tu pedido!");
-  carrito = [];
-  actualizarContadorCarrito();
-  cargarCarritoLocalStorage();
-  mostrarProductosEnCarrito();
-});
 
 
 

@@ -1,0 +1,45 @@
+#iconoCarrito{
+    margin-left: 0px;
+}
+
+#productos{
+    display: flex ;
+    flex-direction: row !important;
+    
+}
+ .imagenProducto{
+    width: 200px;
+    height: 200px;
+} 
+.elementoProducto{
+    border-radius: 10px;
+    background-color: #ab2a3e;
+    padding: 10px;
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 230px;
+    
+}
+.botonAgregarProducto{
+    color: white !important;
+    background-color: #03045e !important;
+    width: 200px;
+}
+.product{
+    padding:10px;
+}
+
+.carrito-desplegable {
+    display: none;
+    
+}
+
+
+.carrito-visible {
+    display: block;
+
+}
+
+

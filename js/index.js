@@ -31,6 +31,7 @@ const productosEnVenta = (cargarProducto) => {
 `;
         containerDeProductos.append(div);
     });
+    actualizarContadorCarrito()
 }
 
 productosEnVenta(productos)
@@ -60,12 +61,12 @@ function mostrarTodosLosProductos() {
 
 function agregarAlCarrito(producto) {
   carrito.push(producto);
-  actualizarContadorCarrito();
+  actualizarContadorCarrito()
   localStorage.setItem("carrito", JSON.stringify(carrito));
 }
 
 function actualizarContadorCarrito() {
-  contadorCarrito.textContent = carrito.length;
+  contadorCarrito.innerText = carrito.length;
 }
  
 containerDeProductos.addEventListener("click", (event) => {

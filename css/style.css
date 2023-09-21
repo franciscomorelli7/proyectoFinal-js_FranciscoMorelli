@@ -31,15 +31,17 @@
     padding:10px;
 }
 
-.carrito-desplegable {
+.imagenesCarrito{
+    width: 200px;
+    height: 200px;
+}
+#finalizar{
+background-color: #72ce27 !important;
+}
+#vaciar{
+    margin-right: 963px;
+}
+
+.desactivado{
     display: none;
-    
 }
-
-
-.carrito-visible {
-    display: block;
-
-}
-
-

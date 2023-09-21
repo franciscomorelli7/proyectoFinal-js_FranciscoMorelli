@@ -11,7 +11,7 @@ const containerDeProductos = document.querySelector("#productos")
 const categories = document.querySelectorAll(".categorias")
 const botonTodos = document.querySelector("#todosLosProductos")
 const botonCarrito = document.querySelector("#carrito")
-const botonAgregar = document.querySelectorAll(".botonAgregarProducto")
+
 let carrito = [];
 const contadorCarrito = document.querySelector('#cart-count')
 
@@ -32,6 +32,8 @@ const productosEnVenta = (cargarProducto) => {
         containerDeProductos.append(div);
     });
     actualizarContadorCarrito()
+    agregar()
+    
 }
 
 productosEnVenta(productos)
@@ -58,26 +60,36 @@ function mostrarTodosLosProductos() {
 }
 //Agregar productos al carrito
 
-
-function agregarAlCarrito(producto) {
-  carrito.push(producto);
-  actualizarContadorCarrito()
+function agregarAlCarrito(evento) {
+    const idBoton= evento.target.id;
+    const productoAgregado = productos.find (producto => producto.id === idBoton);
+    if(carrito.some(producto=> producto.id === idBoton)){
+       const index = carrito.findIndex (producto => producto.id === idBoton)
+       carrito[index].cantidad++;
+    }else{
+        productoAgregado.cantidad = 1;
+        carrito.push(productoAgregado);
+    }
+    actualizarContadorCarrito()
   localStorage.setItem("carrito", JSON.stringify(carrito));
 }
 
+
+
+//actualizar contador
 function actualizarContadorCarrito() {
   contadorCarrito.innerText = carrito.length;
 }
- 
-containerDeProductos.addEventListener("click", (event) => {
-  if (event.target.classList.contains("botonAgregarProducto")) {
-      const productoId = event.target.id;
-      const productoSeleccionado = productos.find(producto => producto.id === productoId);
-      if (productoSeleccionado) {
-          agregarAlCarrito(productoSeleccionado);
-      }
-  }
-});
+
+
+function agregar(){
+let botonAgregar = document.querySelectorAll(".botonAgregarProducto")
+    botonAgregar.forEach(btn=>{
+        btn.addEventListener("click",agregarAlCarrito)
+    })
+}
+
+
 
 function cargarCarritoLocalStorage() {
   let carritoGuardado = localStorage.getItem("carrito");
@@ -89,7 +101,7 @@ cargarCarritoLocalStorage()
 
 
 
-//Botones carrito
+
 
 
 

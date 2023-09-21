@@ -43,5 +43,5 @@ background-color: #72ce27 !important;
 }
 
 .desactivado{
-    display: none;
+    display: none !important;
 }

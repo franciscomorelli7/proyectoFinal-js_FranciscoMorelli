@@ -7,6 +7,7 @@ const vaciar = document.querySelector('#vaciar')
 const contenedorCarrito = document.querySelector("#contenedorCarrito")
 const productosInfo = document.querySelector('#containerProductos')
 const accionesCarrito = document.querySelector("#accionesCarrito")
+const finalizar = document.querySelector('#finalizar')
 
 const productosEnCarrito = () =>{
 
@@ -43,20 +44,93 @@ function guardarCarritoEnLocalStorage() {
     localStorage.setItem('carrito', JSON.stringify(carrito));
 }
 
-vaciar.addEventListener("click", () => {
-    const confirmacion = confirm("¿Estás seguro de que deseas vaciar el carrito?");
-    if (confirmacion) {
-        vaciarCarrito();
-    }
-});
+vaciar.addEventListener("click",vaciarCarrito)
+
 function vaciarCarrito() {
-    carrito = []; 
-    productosEnCarrito(); 
-    guardarCarritoEnLocalStorage(); 
-    
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+      })
+      
+      swalWithBootstrapButtons.fire({
+        title: 'Estas seguro?',
+        text: "Su carrito va a ser vaciado",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Vaciar',
+        cancelButtonText: 'Cancelar',
+        reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+          swalWithBootstrapButtons.fire(
+            'Vaciado',
+            'Su carrito fue vaciado correctamente',
+            'success'
+          )
+            carrito = []; 
+            guardarCarritoEnLocalStorage(); 
+            productosEnCarrito(); 
+        } else if (
+          
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          swalWithBootstrapButtons.fire(
+            'Cancelado',
+            'Su carrito no ha sido vaciado',
+            'error'
+          )
+        }
+      })
 }
 
 
+function finalizarCompra (){
+
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+      })
+      
+      swalWithBootstrapButtons.fire({
+        title: 'Estas seguro?',
+        text: "Su compra va a ser confirmada",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Finalizar',
+        cancelButtonText: 'Seguir comprando',
+        reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Tu compra se realizo con exito. Gracias por confiar en nostros!',
+                showConfirmButton: false,
+                timer: 4500
+              })
+            carrito = []; 
+            guardarCarritoEnLocalStorage(); 
+            productosEnCarrito(); 
+        } else if (
+         
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          swalWithBootstrapButtons.fire(
+            'Cancelada',
+            'Su compra fue cancelada.',
+            'error'
+          )
+        }
+      })
+      
+}
+finalizar.addEventListener("click",finalizarCompra)
 
 
 
